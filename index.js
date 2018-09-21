@@ -30,6 +30,10 @@ const cluster = require('cluster');
   telegram.answerInlineQuery().then(res=>{console.log(res)});
 
   bot.startPolling();
+
+  if (process.env.NODE_ENV === 'development') {
+   bot.polling.offset = -1;
+  }
   
 //   http.createServer((req, res) => {
 //     res.writeHead(200);
