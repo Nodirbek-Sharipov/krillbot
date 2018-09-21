@@ -1,19 +1,19 @@
 const cluster = require('cluster');
-const http = require('http');
-const numCPUs = require('os').cpus().length;
+// const http = require('http');
+// const numCPUs = require('os').cpus().length;
 
-if (cluster.isMaster) {
-  console.log(`Master ${process.pid} is running`);
+// if (cluster.isMaster) {
+//   console.log(`Master ${process.pid} is running`);
 
-  // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+//   // Fork workers.
+//   for (let i = 0; i < numCPUs; i++) {
+//     cluster.fork();
+//   }
 
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-  });
-} else {
+//   cluster.on('exit', (worker, code, signal) => {
+//     console.log(`worker ${worker.process.pid} died`);
+//   });
+// } else {
  
   // Workers can share any TCP connection
   const Telegraf = require('telegraf');
@@ -31,10 +31,10 @@ if (cluster.isMaster) {
 
   bot.startPolling();
   
-  http.createServer((req, res) => {
-    res.writeHead(200);
-    res.end('hello world\n');
-  }).listen(process.env.port || 8080);
+//   http.createServer((req, res) => {
+//     res.writeHead(200);
+//     res.end('hello world\n');
+//   }).listen(process.env.port || 8080);
 
-  console.log(`Worker ${process.pid} started`);
-}
+//   console.log(`Worker ${process.pid} started`);
+// }
