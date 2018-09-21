@@ -30,6 +30,11 @@ if (cluster.isMaster) {
   telegram.answerInlineQuery().then(res=>{console.log(res)});
 
   bot.startPolling();
+  
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end('hello world\n');
+  }).listen(process.env.port || 8080);
 
   console.log(`Worker ${process.pid} started`);
 }
