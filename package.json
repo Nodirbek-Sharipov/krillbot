@@ -1,0 +1,19 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "^8.0.0",
+    "npm": "^3.23.1"
+  },
+  "connectionString": "",
+  "author": "Nodirbek Sharipov",
+  "license": "ISC",
+  "dependencies": {
+    "telegraf": "^3.23.1"
+  }
+}
