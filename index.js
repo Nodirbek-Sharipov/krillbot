@@ -1,44 +1,23 @@
 const cluster = require('cluster');
-// const http = require('http');
-// const numCPUs = require('os').cpus().length;
+const express	= require('express');
+const app		= express();
 
-// if (cluster.isMaster) {
-//   console.log(`Master ${process.pid} is running`);
+const Telegraf = require('telegraf');
+const Telegram = require('telegraf/telegram');
+const telegram = new Telegram(process.env.token, { agent: null, webhookReply: true });
 
-//   // Fork workers.
-//   for (let i = 0; i < numCPUs; i++) {
-//     cluster.fork();
-//   }
+const bot = new Telegraf(process.env.token);
 
-//   cluster.on('exit', (worker, code, signal) => {
-//     console.log(`worker ${worker.process.pid} died`);
-//   });
-// } else {
- 
-  // Workers can share any TCP connection
-  const Telegraf = require('telegraf');
-  const Telegram = require('telegraf/telegram');
-  const telegram = new Telegram(process.env.token, { agent: null, webhookReply: true });
+bot.start((ctx) => ctx.reply('Welcome!'));
+bot.help((ctx) => ctx.reply('Send me a sticker'));
+bot.on('sticker', (ctx) => ctx.reply('рџ‘Ќ'));
+bot.hears('hi', (ctx) => ctx.reply('Hey there'));
+bot.hears(/buy/i, (ctx) => ctx.reply('Buy-buy'));
+telegram.answerInlineQuery().then(res=>{console.log(res)});
 
-  const bot = new Telegraf(process.env.token);
+bot.startPolling();
 
-  bot.start((ctx) => ctx.reply('Welcome!'));
-  bot.help((ctx) => ctx.reply('Send me a sticker'));
-  bot.on('sticker', (ctx) => ctx.reply('рџ‘Ќ'));
-  bot.hears('hi', (ctx) => ctx.reply('Hey there'));
-  bot.hears(/buy/i, (ctx) => ctx.reply('Buy-buy'));
-  telegram.answerInlineQuery().then(res=>{console.log(res)});
-
-  bot.startPolling();
-
-  if (process.env.NODE_ENV === 'development') {
-   bot.polling.offset = -1;
-  }
-  
-//   http.createServer((req, res) => {
-//     res.writeHead(200);
-//     res.end('hello world\n');
-//   }).listen(process.env.port || 8080);
-
-//   console.log(`Worker ${process.pid} started`);
-// }
+app.set('port', ( process.env.PORT || 3000 ));
+var server = app.listen(app.get( 'port' ), function(){
+	console.log("Server is running on port " +app.get( 'port' )+ "...");
+});
